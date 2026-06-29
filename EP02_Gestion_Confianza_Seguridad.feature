@@ -46,6 +46,20 @@ Caracteristica: Epica 02 - Gestion de Confianza y Seguridad
     Entonces el sistema restringe el acceso a la funcionalidad de mensajeria
     Y muestra un mensaje indicando que debe verificar su identidad antes de conversar
 
+@US11 @ReportesSeguridad
+Escenario: Envio exitoso de un reporte con evidencias y descripcion
+  Dado que el estudiante ha detectado una publicacion o perfil sospechoso en la plataforma
+  Cuando ingresa al modulo de denuncias, adjunta las evidencias visuales y añade una descripcion detallada
+  Entonces el sistema procesa la informacion de manera segura
+  Y almacena el reporte en el panel de administracion para la revision del equipo de soporte
+
+@US11 @ReportesSeguridad @ManejoErrores
+Escenario: Rechazo de reporte por falta de informacion obligatoria
+  Dado que el estudiante intenta enviar una denuncia sobre un alojamiento
+  Cuando deja el campo de descripcion vacio y no selecciona ningun motivo de seguridad
+  Entonces el sistema bloquea el envio del formulario
+  Y muestra un mensaje de advertencia solicitando completar los campos obligatorios
+
   @US12 @ContratosYPagos
   Escenario: Firma de contrato y procesamiento de pago exitoso
     Dado que el estudiante se encuentra en la pasarela de pagos revisando el contrato digital
@@ -60,30 +74,16 @@ Caracteristica: Epica 02 - Gestion de Confianza y Seguridad
     Entonces el sistema detiene el flujo de estas contrataciones y no emite el contrato
     Y muestra una alerta indicando que verifique los fondos o intente con otro metodo
 
-  @US15 @ReportesSeguridad
-  Escenario: Reporte exitoso de un anuncio o perfil sospechoso
-    Dado que el estudiante identifica irregularidades en una publicacion de alojamiento
-    Cuando selecciona la opcion Reportar Anuncio, elige un motivo valido y envia el detalle
-    Entonces el sistema registra la denuncia en el panel de administracion
-    Y muestra una confirmacion informando que el equipo de soporte revisara el caso
+@US13 @GestionContratos
+Escenario: Visualizacion y descarga exitosa del comprobante de pago y contrato digital
+  Dado que el estudiante ha firmado el contrato y completado el pago de manera exitosa
+  Cuando accede a su bandeja de documentos y selecciona la opcion Descargar Comprobante
+  Entonces el sistema genera un archivo digital valido con los detalles de la transaccion
+  Y permite al usuario guardarlo en su dispositivo de manera local
 
-  @US15 @ReportesSeguridad @ManejoErrores
-  Escenario: Intento de envio de reporte con campos vacios
-    Dado que el estudiante se encuentra en el formulario de reporte de seguridad
-    Cuando presiona el boton Enviar Reporte sin seleccionar un motivo ni escribir una descripcion
-    Entonces el sistema bloquea la solicitud y resalta los campos obligatorios
-    Y muestra un mensaje indicando que debe especificar los motivos del reporte
-
-  @US18 @Calificaciones
-  Escenario: Publicacion exitosa de resenia y calificacion al arrendador
-    Dado que el estudiante ha finalizado su periodo de contrato registrado en la plataforma
-    Cuando ingresa al perfil del arrendador, selecciona el puntaje de estrellas y redacta su comentario
-    Entonces el sistema publica la resenia y actualiza el promedio de calificacion del arrendador
-    Y el comentario se vuelve visible para futuros estudiantes en el feed de busqueda
-
-  @US18 @Calificaciones @ManejoErrores
-  Escenario: Restriccion de calificacion sin contrato previo finalizado
-    Dado que un estudiante navega por la plataforma pero no ha alquilado con ese arrendador
-    Cuando intenta registrar una calificacion o comentario en el perfil del propietario
-    Entonces el sistema inhabilita el formulario de ingreso de resenias
-    Y muestra una restriccion indicando que solo los inquilinos confirmados pueden calificar
+@US13 @GestionContratos @ManejoErrores
+Escenario: Intento de acceso a comprobantes de pago no procesados o fallidos
+  Dado que la transaccion del estudiante se encuentra en estado fallido o pendiente de aprobacion
+  Cuando intenta ingresar a la seccion de descarga de recibos digitales
+  Entonces el sistema deshabilita el boton de descarga
+  Y muestra una alerta indicando que el documento no estara disponible hasta que se confirme el pago
